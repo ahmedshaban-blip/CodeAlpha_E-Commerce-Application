@@ -31,49 +31,83 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Products"),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body: ListView.builder(
         itemCount: Products.length,
         itemBuilder: (BuildContext context, int index) {
           final products = Products[index];
-          return Card(
-            elevation: 5,
-            margin: const EdgeInsets.all(10),
-            child: InkWell(
-              onTap: () => Navigator.push(
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: InkWell(
+                onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
                         ProductdetailsPage(products: products),
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
+                  ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${products.id}- ${products.name}",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16)),
+                      child: Image.asset(
+                        products.imageurl,
+                        height: 250,
+                        width: double.infinity,
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                    const SizedBox(height: 10),
-                    Image.asset(
-                      products.imageurl,
-                      height: 150,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      products.description,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "${products.price} EGP",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            products.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[900],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            products.description,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            "${products.price} EGP",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green[700],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

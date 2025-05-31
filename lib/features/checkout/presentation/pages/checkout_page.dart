@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CheckoutPage extends StatefulWidget {
   final ProductModel products;
 
-  const CheckoutPage({Key? key, required this.products}) : super(key: key);
+  const CheckoutPage({super.key, required this.products});
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -48,35 +48,67 @@ class _CheckoutPageState extends State<CheckoutPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Checkout"),
+        backgroundColor: const Color(0xFF1A202C),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Cart Items",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Cart Items",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text("View cart",
+                      style: TextStyle(
+                          color: Color(0xFF1A202C),
+                          fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
 
             // Placeholder cart item list
             ...List.generate(1, (index) {
-              return ListTile(
-                leading: const Icon(Icons.shopping_bag),
-                title: Text(widget.products.name),
-                subtitle: const Text("Quantity: 1"),
-                trailing: Text("${widget.products.price.toString()} EGP"),
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListTile(
+                  leading: const Icon(Icons.shopping_bag, size: 40),
+                  title: Text(widget.products.name,
+                      style: const TextStyle(fontSize: 18)),
+                  subtitle: const Text("Quantity: 1"),
+                  trailing: Text("${widget.products.price.toString()} EGP",
+                      style: const TextStyle(fontSize: 18)),
+                ),
               );
             }),
 
             const Divider(height: 32),
-            Text("Total: ${widget.products.price} EGP",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Total: ",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(
+                  "${widget.products.price} EGP",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
 
             const SizedBox(height: 24),
 
             const Text("Payment Method",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
             Column(
               children: ["Credit Card", "PayPal", "Google Pay"].map((method) {
                 return RadioListTile<String>(
@@ -88,6 +120,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       _selectedPaymentMethod = value;
                     });
                   },
+                  activeColor: const Color(0xFF1A202C),
                 );
               }).toList(),
             ),
@@ -100,9 +133,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
             TextField(
               controller: _addressController,
               maxLines: 2,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 hintText: "Enter delivery address",
+                hintStyle: const TextStyle(fontSize: 16),
               ),
             ),
 
@@ -111,6 +147,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
             Center(
               child: ElevatedButton(
                 onPressed: _placeOrder,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(200, 50),
+                  backgroundColor: const Color(0xFF1A202C),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 child: const Text("Place Order"),
               ),
             ),
