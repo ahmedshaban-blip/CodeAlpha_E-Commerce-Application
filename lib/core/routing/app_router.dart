@@ -1,4 +1,3 @@
-import 'package:e_commerce/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:e_commerce/features/home/presentation/pages/home_page.dart';
 import 'package:e_commerce/features/login/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,8 @@ class AppRouter {
       /*   return _createRoute(ProductdetailsPage(
           products: [],
         ));*/
-      case Routes.CheckoutPage:
-        return _createRoute(const CheckoutPage());
+      /*case Routes.CheckoutPage:
+        return _createRoute(const CheckoutPage());*/
 
       default:
         return null;

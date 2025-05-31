@@ -22,39 +22,51 @@ class loginScreen extends StatelessWidget {
             } else if (state is LoginFailure) {
               return Center(child: Text('Error: ${state.error}'));
             }
-            return Column( mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(color: Colors.blue,
-                  child: TextFormField(decoration: InputDecoration(),
-                  controller: TextEditingController(text: emailController.text),
-                  obscureText: false,
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
-
-
-                  
-                ),
-                SizedBox(height: 20),
-                  Container(color: Colors.blue,
-                  child: TextFormField(decoration: InputDecoration(),
-                  controller: TextEditingController(text: passwordController.text),
-                  obscureText: true,
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<LoginCubit>()
+                          .login(emailController.text, passwordController.text);
+                      Navigator.pushReplacementNamed(context, Routes.HomePage);
 
-
-                  
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<LoginCubit>().login(emailController.text, passwordController.text);
-                     Navigator.pushReplacementNamed(context, Routes.HomePage);
-
-                    //Navigator.pushNamed(context, '/HomePage');
-                  },
-                  child: const Text('Login'),
-                  
+                      //Navigator.pushNamed(context, '/HomePage');
+                    },
+                    child: const Text('Login'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   )
-              ],
+                ],
+              ),
             );
           },
         ),

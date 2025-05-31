@@ -25,7 +25,11 @@ class LoginCubit extends Cubit<LoginState> {
     }
     // emit(LoginSuccess(result));
     catch (e) {
-      emit(LoginFailure(e.toString()));
+      if (isClosed) {
+        print('Error after cubit is closed: $e');
+      } else {
+        emit(LoginFailure(e.toString()));
+      }
     }
   }
 }

@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         id: 3,
         name: "T-shirt Polo",
         imageurl: "assets/images/T-shirt Polo.jpg",
-        price: 190,
+        price: 320,
         description: "This is a  T-shirt Polo"),
   ];
 
@@ -36,44 +36,47 @@ class HomePage extends StatelessWidget {
         itemCount: Products.length,
         itemBuilder: (BuildContext context, int index) {
           final products = Products[index];
-          return InkWell(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductdetailsPage(products: products),
-                )),
-            child: Card(
-              color: const Color.fromARGB(255, 120, 133, 10),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "${products.id}-",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(products.name, style: TextStyle(fontSize: 20)),
-                      ],
+          return Card(
+            elevation: 5,
+            margin: const EdgeInsets.all(10),
+            child: InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ProductdetailsPage(products: products),
+                  )),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${products.id}- ${products.name}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset(
+                    const SizedBox(height: 10),
+                    Image.asset(
                       products.imageurl,
+                      height: 150,
                     ),
-                  ),
-                  Text(products.description,
+                    const SizedBox(height: 10),
+                    Text(
+                      products.description,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic)),
-                  Text(
-                    "${products.price} EGP",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ],
+                          fontStyle: FontStyle.italic),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "${products.price} EGP",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
