@@ -30,10 +30,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Products"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        title: Text(
+          "Products",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blueGrey[900],
         elevation: 0,
+        centerTitle: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       body: ListView.builder(
         itemCount: Products.length,
@@ -47,10 +56,10 @@ class HomePage extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withOpacity(0.3),
                     spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3), // changes position of shadow
+                    blurRadius: 10,
+                    offset: Offset(0, 5), // changes position of shadow
                   ),
                 ],
               ),
@@ -83,12 +92,12 @@ class HomePage extends StatelessWidget {
                           Text(
                             products.name,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: Colors.blueGrey[900],
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 12),
                           Text(
                             products.description,
                             style: TextStyle(
@@ -101,7 +110,7 @@ class HomePage extends StatelessWidget {
                           Text(
                             "${products.price} EGP",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.green[700],
                             ),

@@ -47,8 +47,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Checkout"),
-        backgroundColor: const Color(0xFF1A202C),
+        title: Text(
+          "Products",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blueGrey[900],
+        elevation: 0,
+        centerTitle: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -79,7 +89,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  leading: const Icon(Icons.shopping_bag, size: 40),
+                  leading: Image.asset(
+                    widget.products.imageurl,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
                   title: Text(widget.products.name,
                       style: const TextStyle(fontSize: 18)),
                   subtitle: const Text("Quantity: 1"),
@@ -149,12 +164,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 onPressed: _placeOrder,
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(200, 50),
-                  backgroundColor: const Color(0xFF1A202C),
+                  backgroundColor: Colors.blueGrey[900],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text("Place Order"),
+                child: const Text(
+                  "Place Order",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
