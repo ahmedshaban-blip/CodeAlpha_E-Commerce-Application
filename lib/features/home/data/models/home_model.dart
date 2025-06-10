@@ -95,17 +95,16 @@ class ProductModel {
           ?.toDouble(), // Using stock as count for DummyJSON
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'price': price,
-      'description': description,
-      'category': category,
-      'image': image,
-      'rating': rating,
-      'count': count,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'price': price,
+        'description': description,
+        'category': category,
+        'image': image,
+        'rating': {
+          'rate': rating,
+          'count': count,
+        },
+      };
 }

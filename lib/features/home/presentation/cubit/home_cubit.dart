@@ -4,9 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
+  int currentIndex = 0;
+
   ApiService apiService = ApiService();
-  String currentCategory = 'laptops'; // Start with laptops
+  String currentCategory = 'laptops';
+
   final Map<String, String> categoryUrls = {
+    'electronics': 'https://fakestoreapi.com/products/category/electronics',
     'jewelery': 'https://fakestoreapi.com/products/category/jewelery',
     'laptops': 'https://dummyjson.com/products/category/laptops',
     'smartphones': 'https://dummyjson.com/products/category/smartphones',
@@ -16,12 +20,13 @@ class HomeCubit extends Cubit<HomeState> {
     'women\'s clothing':
         'https://fakestoreapi.com/products/category/women\'s%20clothing',
   };
+
   HomeCubit() : super(HomeInitial());
 
-  // Method to change category and fetch products for that category
-  void changeCategory(String category) async {
+  void changeCategory(String category, int index) async {
     if (isClosed) return;
 
+    currentIndex = index;
     currentCategory = category;
     emit(HomeLoading());
 
@@ -31,13 +36,12 @@ class HomeCubit extends Cubit<HomeState> {
 
       List<ProductModel> products;
 
-      // Handle different API response structures
-      if (category == 'jewelery' || category.contains("clothing")) {
-        // FakeStoreAPI returns array directly
+      if (category == 'jewelery' ||
+          category.contains("clothing") ||
+          category == 'electronics') {
         List<dynamic> data = response;
         products = data.map((item) => ProductModel.fromJson(item)).toList();
       } else {
-        // DummyJSON returns object with 'products' array
         Map<String, dynamic> data = response;
         List<dynamic> productsData = data['products'];
         products = productsData
@@ -53,15 +57,13 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  // Get the appropriate API URL based on category
   String _getApiUrl(String category) {
     return categoryUrls[category] ??
         'https://dummyjson.com/products/category/laptops';
   }
 
-  // Fetch all products (for initial load)
   void fetchProducts() async {
     if (isClosed) return;
-    changeCategory(currentCategory);
+    changeCategory(currentCategory, currentIndex);
   }
 }

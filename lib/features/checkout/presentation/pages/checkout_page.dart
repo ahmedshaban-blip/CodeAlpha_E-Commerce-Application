@@ -1,12 +1,12 @@
-import 'package:e_commerce/core/routing/routes.dart';
 import 'package:e_commerce/features/home/data/models/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../cubit/checkout_cubit.dart';
 import '../cubit/checkout_state.dart';
 
 class CheckoutPage extends StatefulWidget {
-  final ProductModel products;
+  final List<ProductModel> products;
 
   const CheckoutPage({super.key, required this.products});
 
@@ -16,7 +16,10 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   String? _selectedPaymentMethod;
-  final bool _isButtonDisabled = false;
+
+  double get totalPrice {
+    return widget.products.fold(0, (sum, item) => sum + item.price!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
       create: (_) => CheckoutCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             "Checkout",
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -35,81 +38,83 @@ class _CheckoutPageState extends State<CheckoutPage> {
           backgroundColor: Colors.blueGrey[900],
           elevation: 0,
           centerTitle: true,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
         ),
         body: BlocBuilder<CheckoutCubit, CheckoutState>(
           builder: (context, state) {
             return SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text("Cart Items",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text("View cart",
-                            style: TextStyle(
-                                color: Color(0xFF1A202C),
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
+                  Text("Items",
+                      style: TextStyle(
+                          fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8.h),
 
-                  // Placeholder cart item list
-                  ...List.generate(1, (index) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        leading: Image.network(
-                          width: 56,
-                          height: 56,
-                          widget.products.image!,
-                          fit: BoxFit.cover,
+                  /// قائمة المنتجات
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.products.length,
+                    itemBuilder: (context, index) {
+                      final product = widget.products[index];
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                        title: Text(widget.products.title!,
-                            style: const TextStyle(fontSize: 18)),
-                        subtitle: const Text("Quantity: 1"),
-                        trailing: Text("${widget.products.price.toString()} \$",
-                            style: const TextStyle(fontSize: 18)),
-                      ),
-                    );
-                  }),
+                        child: ListTile(
+                          leading: Image.network(
+                            product.image!,
+                            width: 56.w,
+                            height: 56.h,
+                            fit: BoxFit.cover,
+                          ),
+                          title: Text(product.title!,
+                              style: TextStyle(fontSize: 16.sp)),
+                          subtitle: Text("Quantity: 1",
+                              style: TextStyle(fontSize: 12.sp)),
+                          trailing: Text(
+                            "${product.price} \$",
+                            style: TextStyle(fontSize: 16.sp),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
 
-                  const Divider(height: 32),
+                  Divider(height: 32.h),
+
+                  /// السعر الإجمالي
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Total: ",
+                      Text("Total:",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
                       Text(
-                        "${widget.products.price} \$",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        "${totalPrice.toStringAsFixed(2)} \$",
+                        style: TextStyle(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
-                  const Text("Payment Method",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
+                  /// طريقة الدفع
+                  Text("Payment Method",
+                      style: TextStyle(
+                          fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8.h),
+
                   Column(
                     children:
                         ["Credit Card", "PayPal", "Google Pay"].map((method) {
                       return RadioListTile<String>(
-                        title: Text(method),
+                        title: Text(method, style: TextStyle(fontSize: 14.sp)),
                         value: method,
                         groupValue: _selectedPaymentMethod,
                         onChanged: (value) {
@@ -122,31 +127,37 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     }).toList(),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   Center(
                     child: ElevatedButton(
                       onPressed: _selectedPaymentMethod == "Credit Card"
                           ? () async {
-                              CircularProgressIndicator();
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => const Center(
+                                    child: CircularProgressIndicator()),
+                              );
 
                               await CheckoutCubit().paymet_Method(
-                                  amount: widget.products.price!,
-                                  currency: "USD");
+                                  amount: totalPrice, currency: "USD");
+
+                              Navigator.pop(context); // Close the loader
                             }
                           : null,
                       style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 50),
+                        minimumSize: Size(200.w, 50.h),
                         backgroundColor: Colors.blueGrey[900],
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Place Order",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

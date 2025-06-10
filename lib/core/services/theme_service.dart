@@ -17,7 +17,7 @@ class AppTheme {
         error: Colors.red, // اللون الخاص بالأخطاء
         onPrimary: Colors.white, // اللون عند استخدام الـ primary
         onSecondary: Colors.black, // اللون عند استخدام الـ secondary
-        onSurface: AppColor.grayColor, // اللون عند استخدام الـ background
+        onSurface: AppColor.gray, // اللون عند استخدام الـ background
         onError: Colors.white, // اللون عند استخدام الـ error
         brightness: Brightness.light, // مستوى السطوع (فاتح أو غامق)
       ),
@@ -40,7 +40,7 @@ class AppTheme {
         bodyLarge: textStyle(14.sp, FontWeight.normal, AppColor.black),
         bodyMedium: textStyle(12.sp, FontWeight.normal, AppColor.black),
       ),
-      cardColor: AppColor.primaryColor,
+      cardColor: const Color.fromARGB(255, 214, 218, 250),
       buttonTheme: ButtonThemeData(
         buttonColor: AppColor.backgroundColor,
         shape: RoundedRectangleBorder(
@@ -66,7 +66,7 @@ class AppTheme {
     return ThemeData(
       brightness: Brightness.dark,
       primaryColor: AppColor.primaryColor,
-      scaffoldBackgroundColor: AppColor.backgroundColor,
+      scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
       fontFamily: 'Nunito',
       appBarTheme: const AppBarTheme(
         elevation: 0,

@@ -1,6 +1,9 @@
+import 'package:e_commerce/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:e_commerce/features/cart/presentation/pages/cart_page.dart';
 import 'package:e_commerce/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce/features/home/data/models/home_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductdetailsPage extends StatefulWidget {
   final ProductModel products;
@@ -14,20 +17,21 @@ class ProductdetailsPage extends StatefulWidget {
 class _ProductdetailsPageState extends State<ProductdetailsPage> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           "Product Details",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: theme.appBarTheme.titleTextStyle,
         ),
-        backgroundColor: Colors.blueGrey[900],
-        elevation: 0,
-        centerTitle: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        elevation: theme.appBarTheme.elevation ?? 0,
+        centerTitle: theme.appBarTheme.centerTitle ?? true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        iconTheme: theme.appBarTheme.iconTheme,
       ),
       body: SafeArea(
         child: Padding(
@@ -40,10 +44,10 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: theme.shadowColor.withOpacity(0.2),
                       spreadRadius: 2,
-                      blurRadius: 8,
-                      offset: Offset(0, 4),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -57,9 +61,12 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
                         height: 450,
-                        color: Colors.grey[300],
-                        child: Icon(Icons.broken_image,
-                            size: 100, color: Colors.grey),
+                        color: theme.cardColor,
+                        child: Icon(
+                          Icons.broken_image,
+                          size: 100,
+                          color: theme.hintColor,
+                        ),
                       );
                     },
                   ),
@@ -67,36 +74,46 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                widget.products.title!,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.teal[900],
-                ),
+                widget.products.title ?? '',
+                style: theme.textTheme.titleLarge?.copyWith(fontSize: 26),
               ),
               const SizedBox(height: 12),
               Row(
                 children: [
                   Text(
                     "\$ ${widget.products.price}",
-                    style: TextStyle(
-                      fontSize: 24,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontSize: 22,
                       fontWeight: FontWeight.w600,
-                      color: Colors.teal[700],
+                      color: theme.colorScheme.secondary,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final cartCubit = context.read<CartCubit>();
+                      await cartCubit.addToCart(widget.products);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider.value(
+                            value: cartCubit,
+                            child: CartPage(),
+                          ),
+                        ),
+                      );
+                      ;
+                    },
                     icon: Icon(
                       Icons.favorite_border,
-                      color: Colors.pinkAccent,
-                      size: 32,
+                      color: theme.colorScheme.error,
+                      size: 30,
                     ),
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -106,22 +123,22 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                       MaterialPageRoute(
                         builder: (context) {
                           return CheckoutPage(
-                            products: widget.products,
+                            products: [widget.products], // ✅ الحل هنا
                           );
                         },
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    minimumSize: Size(double.infinity, 56),
-                    backgroundColor: Colors.blueGrey[900],
+                    backgroundColor: theme.primaryColor,
+                    foregroundColor: theme.colorScheme.onPrimary,
+                    minimumSize: const Size(double.infinity, 56),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    elevation: 6,
+                    elevation: 8,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Checkout",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),

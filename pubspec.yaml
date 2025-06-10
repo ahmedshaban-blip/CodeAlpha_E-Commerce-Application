@@ -34,8 +34,8 @@ dependencies:
   intl: null
   json_annotation: null
   lottie: null
-  path: ^1.9.1
-  shared_preferences: null
+  path: ^1.9.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   bloc_test: null
