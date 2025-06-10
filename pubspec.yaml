@@ -34,7 +34,7 @@ dependencies:
   intl: null
   json_annotation: null
   lottie: null
-  path: ^1.9.1
+  path: ^1.9.0
   shared_preferences: null
 
 dev_dependencies:
