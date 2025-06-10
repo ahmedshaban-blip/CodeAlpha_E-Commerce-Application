@@ -1,129 +1,148 @@
-import 'package:e_commerce/features/home/data/models/home_model.dart';
-import 'package:e_commerce/features/productdetails/presentation/pages/productdetails_page.dart';
+import 'package:e_commerce/core/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/home_cubit.dart';
+import '../cubit/home_state.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final List<ProductModel> Products = [
-    ProductModel(
-        id: 1,
-        name: "T-shirt preimum",
-        imageurl: "assets/images/preimum.jpg",
-        price: 190,
-        description: "This is a  Preimum T-shirt"),
-    ProductModel(
-        id: 2,
-        name: "Men-s-Two-Piece-Business-Suit",
-        imageurl: "assets/images/Men-s-Two-Piece-Business-Suit-Bl.jpg",
-        price: 1900,
-        description: "This is a  Men-s-Two-Piece-Business-Suit"),
-    ProductModel(
-        id: 3,
-        name: "T-shirt Polo",
-        imageurl: "assets/images/T-shirt Polo.jpg",
-        price: 320,
-        description: "This is a  T-shirt Polo"),
-  ];
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          "Products",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+    return BlocProvider(
+      create: (_) => HomeCubit()..fetchProducts(),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Home Page')),
+        body: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is HomeFailure) {
+              return Center(
+                  child: Text('Error: ${state.error}',
+                      style: TextStyle(color: Colors.red, fontSize: 18)));
+            } else if (state is HomeSuccess) {
+              final products = state.products;
+              return ListView.builder(
+                itemCount: products.length,
+                padding: const EdgeInsets.all(8.0),
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return Card(
+                    margin: const EdgeInsets.all(8.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        product.image != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                ),
+                                child: Image.network(
+                                  product.image!,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Container(
+                                height: 140,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(12),
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.image,
+                                  size: 80,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.title ?? 'No Title',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${product.rate?.toStringAsFixed(1) ?? 'N/A'}',
+                                    style: const TextStyle(
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    '(${product.count ?? '0'} reviews)',
+                                    style: const TextStyle(
+                                      color: Colors.black45,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '\$${product.price?.toStringAsFixed(2) ?? 'N/A'}',
+                                style: const TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.ProductdetailsPage,
+                                    arguments: product,
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                                child: const Text('Details'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+            return const Center(
+                child: Text('Press button to load products',
+                    style: TextStyle(fontSize: 16)));
+          },
         ),
-        backgroundColor: Colors.blueGrey[900],
-        elevation: 0,
-        centerTitle: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      body: ListView.builder(
-        itemCount: Products.length,
-        itemBuilder: (BuildContext context, int index) {
-          final products = Products[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                    offset: Offset(0, 5), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ProductdetailsPage(products: products),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(16)),
-                      child: Image.asset(
-                        products.imageurl,
-                        height: 250,
-                        width: double.infinity,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            products.name,
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[900],
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            products.description,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            "${products.price} EGP",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green[700],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

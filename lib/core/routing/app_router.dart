@@ -1,9 +1,12 @@
 import 'package:e_commerce/features/home/presentation/pages/home_page.dart';
+import 'package:e_commerce/features/login/presentation/pages/auth_wraper.dart';
 import 'package:e_commerce/features/login/presentation/pages/login_page.dart';
+import 'package:e_commerce/features/productdetails/presentation/pages/productdetails_page.dart';
 import 'package:flutter/material.dart';
 import '../routing/routes.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/home/data/models/home_model.dart'; // تأكد تستورد الـ model هنا
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -12,17 +15,16 @@ class AppRouter {
         return _createRoute(const SplashScreen());
       case Routes.onBoardingScreen:
         return _createRoute(const OnboardingScreen());
+      case Routes.AuthWrapper:
+        return _createRoute(AuthWrapper());
       case Routes.loginScreen:
         return _createRoute(const loginScreen());
       case Routes.HomePage:
         return _createRoute(HomePage());
       case Routes.ProductdetailsPage:
-      /*   return _createRoute(ProductdetailsPage(
-          products: [],
-        ));*/
-      /*case Routes.CheckoutPage:
-        return _createRoute(const CheckoutPage());*/
-
+        final product = settings.arguments as ProductModel;
+        return _createRoute(ProductdetailsPage(products: product));
+      // يمكن تضيف CheckoutPage هنا بالمثل إذا تحتاج
       default:
         return null;
     }

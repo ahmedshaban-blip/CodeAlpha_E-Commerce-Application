@@ -1,36 +1,46 @@
+import 'package:e_commerce/core/services/api_service.dart';
+import 'package:e_commerce/features/home/data/models/home_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
+  ApiService apiService = ApiService();
   HomeCubit() : super(HomeInitial());
 
-  /* Future<void> viewProducts() async {
+  // void fetchProducts() async {
+  //   emit(HomeLoading());
+  //   try {
+  //     final response =
+  //         await apiService.get(url: 'https://fakestoreapi.com/products');
+  //     List<dynamic> data = response; // ممكن تكون List<dynamic>
+
+  //     List<ProductModel> products =
+  //         data.map((item) => ProductModel.fromJson(item)).toList();
+
+  //     emit(HomeSuccess(products));
+  //   } catch (e) {
+  //     emit(HomeFailure(e.toString()));
+  //   }
+  // }
+  void fetchProducts() async {
+    if (isClosed) return; // ✅ تحقق قبل emit
+
     emit(HomeLoading());
     try {
-      final List<Product> products = [
-        Product(
-            id: 1,
-            name: "T-shirt",
-            imageurl: "assets/images/T-shirt Polo.jpg",
-            price: 100,
-            description: "This is T-shirt Polo"),
-        Product(
-            id: 2,
-            name: "Casual",
-            imageurl: "assets/images/Men-s-Two-Piece-Business-Suit-Bl.jpg",
-            price: 1000,
-            description: "This is A Men-s-Two-Piece-Business-Suit"),
-        Product(
-            id: 3,
-            name: "T-shirt",
-            imageurl: "assets/images/preimum.jpg",
-            price: 90,
-            description: "This is T-shirt Preimum"),
-      ];
+      final response =
+          await apiService.get(url: 'https://fakestoreapi.com/products');
+      List<dynamic> data = response;
 
-      emit(HomeSuccess(products)); // ✅ مرر المنتجات هنا
+      List<ProductModel> products =
+          data.map((item) => ProductModel.fromJson(item)).toList();
+
+      if (isClosed) return; // ✅ تحقق قبل emit
+      emit(HomeSuccess(products));
     } catch (e) {
+      if (isClosed) return; // ✅ تحقق قبل emit
       emit(HomeFailure(e.toString()));
     }
-  }*/
+  }
+
+  // emit(HomeSuccess(result));
 }

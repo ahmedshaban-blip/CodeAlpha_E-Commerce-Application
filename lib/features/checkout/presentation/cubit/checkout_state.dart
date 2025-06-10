@@ -5,6 +5,7 @@ class CheckoutInitial extends CheckoutState {}
 class CheckoutLoading extends CheckoutState {}
 
 class CheckoutSuccess extends CheckoutState {
+  CheckoutSuccess(Future result);
   // final result;
   // Success(this.result);
 }

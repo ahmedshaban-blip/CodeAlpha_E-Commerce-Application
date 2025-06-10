@@ -49,17 +49,25 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    widget.products.imageurl,
+                  child: Image.network(
+                    widget.products.image!,
                     fit: BoxFit.cover,
                     height: 450,
                     width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 450,
+                        color: Colors.grey[300],
+                        child: Icon(Icons.broken_image,
+                            size: 100, color: Colors.grey),
+                      );
+                    },
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               Text(
-                widget.products.name,
+                widget.products.title!,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -114,7 +122,7 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                     elevation: 6,
                   ),
                   child: Text(
-                    "Add to Cart",
+                    "Checkout",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
