@@ -22,6 +22,7 @@ dependencies:
   flutter_animate: null
   flutter_bloc: null
   flutter_credit_card: ^4.1.0
+  flutter_dotenv: ^5.2.1
   flutter_launcher_icons: null
   flutter_native_splash: null
   flutter_screenutil: null
@@ -54,3 +55,4 @@ flutter:
     - assets/icons/
     - assets/lottie/
     - assets/lang/
+    - .env

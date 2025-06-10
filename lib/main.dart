@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/utils/keys.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,13 +10,16 @@ import 'core/utils/app_shared_preferences.dart';
 import 'core/routing/app_router.dart';
 import 'app.dart';
 import 'app_bloc_observer.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   await EasyLocalization.ensureInitialized();
-  Stripe.publishableKey = Keys().publishable_key;
+
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey = dotenv.env['publishable_key']!;
+  ;
   Bloc.observer = AppBlocObserver();
   await AppPreferences().init();
 

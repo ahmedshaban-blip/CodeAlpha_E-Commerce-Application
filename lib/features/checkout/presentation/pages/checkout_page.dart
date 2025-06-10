@@ -78,8 +78,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         title: Text(widget.products.title!,
                             style: const TextStyle(fontSize: 18)),
                         subtitle: const Text("Quantity: 1"),
-                        trailing: Text(
-                            "${widget.products.price.toString()} EGP",
+                        trailing: Text("${widget.products.price.toString()} \$",
                             style: const TextStyle(fontSize: 18)),
                       ),
                     );
@@ -93,7 +92,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       Text(
-                        "${widget.products.price} EGP",
+                        "${widget.products.price} \$",
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),

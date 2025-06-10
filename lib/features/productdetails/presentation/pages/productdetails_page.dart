@@ -78,7 +78,7 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
               Row(
                 children: [
                   Text(
-                    "EGP ${widget.products.price}",
+                    "\$ ${widget.products.price}",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,

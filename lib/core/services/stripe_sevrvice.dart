@@ -2,9 +2,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/services/api_service.dart';
-import 'package:e_commerce/core/utils/keys.dart';
 import 'package:e_commerce/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:e_commerce/features/checkout/data/models/payment_intent_model/payment_intent_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 class stripeService {
@@ -19,7 +19,7 @@ class stripeService {
           contentType: Headers.formUrlEncodedContentType,
           url: url,
           body: paymentIntentInputModel.toJson(), // ✅ هنا التعديل
-          token: Keys().secret_key);
+          token: dotenv.env['secret_key']!);
 
       var paymentintentModel = PaymentIntentModel.fromJson(response);
 
