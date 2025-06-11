@@ -1,4 +1,5 @@
 import 'package:e_commerce/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:e_commerce/features/home/presentation/cubit/home_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,9 +40,12 @@ void main() async {
             providers: [
               BlocProvider(create: (_) => LocaleCubit()),
               BlocProvider(create: (_) => ThemeCubit()),
-              BlocProvider<CartCubit>(
-                create: (_) => CartCubit(),
-              ),
+              BlocProvider(
+                  create: (_) =>
+                      CartCubit()..loadCart()), // ✅ حمّل البيانات مباشرة
+
+              BlocProvider(
+                  create: (_) => HomeCubit()), // لو عندك HomeCubit مثلاً
             ],
             child: MyApp(appRouter: AppRouter()),
           );

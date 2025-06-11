@@ -50,6 +50,7 @@ class ProductModel {
   final String image;
   final double? rating;
   final double? count;
+  int quantity; // ✅ أضف هذا
 
   ProductModel({
     required this.id,
@@ -60,7 +61,32 @@ class ProductModel {
     required this.image,
     this.rating,
     this.count,
+    this.quantity = 1, // ✅ القيمة الافتراضية
   });
+
+  ProductModel copyWith({
+    int? id,
+    String? title,
+    double? price,
+    String? description,
+    String? category,
+    String? image,
+    double? rating,
+    double? count,
+    int? quantity,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      image: image ?? this.image,
+      rating: rating ?? this.rating,
+      count: count ?? this.count,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 
   // Factory constructor for FakeStoreAPI (jewelry)
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -75,6 +101,9 @@ class ProductModel {
       count: json['rating'] != null
           ? (json['rating']['count'] as num?)?.toDouble()
           : null,
+      quantity: json['rating'] != null && json['rating']['quantity'] != null
+          ? json['rating']['quantity'] as int
+          : 1,
     );
   }
 
@@ -106,5 +135,6 @@ class ProductModel {
           'rate': rating,
           'count': count,
         },
+        'quantity': quantity,
       };
 }

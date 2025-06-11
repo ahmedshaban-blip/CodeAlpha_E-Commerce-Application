@@ -2,6 +2,7 @@
 
 import 'package:e_commerce/core/routing/routes.dart';
 import 'package:e_commerce/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:e_commerce/features/cart/presentation/pages/cart_page.dart';
 import 'package:e_commerce/features/productdetails/presentation/pages/productdetails_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -153,13 +154,11 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (_) => BlocProvider(
-                                              create: (_) => CartCubit(),
-                                              child: ProductdetailsPage(
-                                                  products: product),
-                                            ),
+                                            builder: (_) => ProductdetailsPage(
+                                                products: product),
                                           ),
                                         );
+                                        ;
                                       },
                                       child: const Text('Details'),
                                     ),
@@ -191,9 +190,18 @@ class _HomePageState extends State<HomePage> {
                           'men\'s clothing',
                           'women\'s clothing',
                         ];
-                        context
-                            .read<HomeCubit>()
-                            .changeCategory(categories[index], index);
+                        if (index == 4) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const CartPage(),
+                            ),
+                          );
+                        } else {
+                          context
+                              .read<HomeCubit>()
+                              .changeCategory(categories[index], index);
+                        }
                       },
                       selectedItemColor: Theme.of(context).colorScheme.primary,
                       unselectedItemColor: Theme.of(context)
@@ -217,9 +225,13 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(Icons.female),
                           label: 'Women\'s clothing',
                         ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.card_travel),
+                          label: 'Cart',
+                        ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               );
             }

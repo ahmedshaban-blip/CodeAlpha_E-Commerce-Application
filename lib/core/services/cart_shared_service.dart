@@ -66,4 +66,10 @@ class CartSharedService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_cartKey);
   }
+
+  static Future<void> updateCart(List<ProductModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    final productsJson = products.map((p) => jsonEncode(p.toJson())).toList();
+    await prefs.setStringList(_cartKey, productsJson);
+  }
 }

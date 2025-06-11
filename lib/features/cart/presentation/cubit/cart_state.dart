@@ -7,8 +7,11 @@ class CartInitial extends CartState {}
 class CartLoading extends CartState {}
 
 class CartLoaded extends CartState {
-  final List<ProductModel> cartItems;
-  CartLoaded(this.cartItems);
+  final List<ProductModel> items; // 👈 قد يكون هذا هو الاسم الصحيح
+
+  CartLoaded({
+    required this.items,
+  });
 }
 
 class CartError extends CartState {

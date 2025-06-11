@@ -89,7 +89,7 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                     ),
                   ),
                   const Spacer(),
-                  IconButton(
+                  ElevatedButton(
                     onPressed: () async {
                       final cartCubit = context.read<CartCubit>();
                       await cartCubit.addToCart(widget.products);
@@ -105,10 +105,12 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                       );
                       ;
                     },
-                    icon: Icon(
-                      Icons.favorite_border,
-                      color: theme.colorScheme.error,
-                      size: 30,
+                    child: Text(
+                      "Add to cart",
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        fontSize: 18,
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                   ),
                 ],

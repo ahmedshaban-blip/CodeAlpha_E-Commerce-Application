@@ -15,7 +15,7 @@ class CartCubit extends Cubit<CartState> {
     try {
       final products = await CartSharedService.getCartProducts();
       print("🛒 Loaded products from SharedPreferences: $products");
-      emit(CartLoaded(products));
+      emit(CartLoaded(items: products));
     } catch (e, stackTrace) {
       print("❌ Error loading cart: $e");
       print(stackTrace); // هيساعدك تشوف مكان الخطأ بالضبط
@@ -26,6 +26,22 @@ class CartCubit extends Cubit<CartState> {
   Future<void> addToCart(ProductModel product) async {
     await CartSharedService.saveProductToCart(product);
     await loadCart();
+  }
+
+  void updateQuantity(int productId, int newQuantity) {
+    // غيرنا String لـ int
+    if (state is CartLoaded) {
+      final currentState = state as CartLoaded;
+      final updatedCart = currentState.items.map((item) {
+        if (item.id == productId) {
+          // دلوقتي المقارنة هتشتغل صح
+          return item.copyWith(quantity: newQuantity);
+        }
+        return item;
+      }).toList();
+
+      emit(CartLoaded(items: updatedCart));
+    }
   }
 
   Future<void> removeFromCart(int productId) async {
