@@ -1,4 +1,5 @@
 import 'package:e_commerce/features/home/data/models/home_model.dart';
+import 'package:e_commerce/features/thankyou/presentation/pages/thankyou_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -292,6 +293,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     amount: totalPrice, currency: "USD");
 
                                 Navigator.pop(context); // Close the loader
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ThankYouPage(total: totalPrice),
+                                    ));
                               }
                             : null,
                         style: ElevatedButton.styleFrom(

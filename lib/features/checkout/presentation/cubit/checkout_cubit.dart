@@ -14,7 +14,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   }) async {
     emit(CheckoutLoading());
     try {
-      var result = stripeService().makePayment(
+      var result = await stripeService().makePayment(
         PaymentIntentInputModel(amount: amount, currency: "USD"),
       );
       emit(CheckoutSuccess(result));

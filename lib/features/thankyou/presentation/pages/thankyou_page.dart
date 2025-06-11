@@ -1,28 +1,24 @@
+import 'package:e_commerce/features/thankyou/presentation/pages/custtom_app_bar.dart';
+import 'package:e_commerce/features/thankyou/presentation/pages/thank_you_view_body.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/thankyou_cubit.dart';
-import '../cubit/thankyou_state.dart';
 
-class ThankyouPage extends StatelessWidget {
-  const ThankyouPage({super.key});
+class ThankYouPage extends StatelessWidget {
+  final double total;
+
+  const ThankYouPage({
+    super.key,
+    required this.total,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ThankyouCubit(),
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Thankyou Page')),
-        body: BlocBuilder<ThankyouCubit, ThankyouState>(
-          builder: (context, state) {
-            if (state is ThankyouLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is ThankyouFailure) {
-              return Center(child: Text('Error: ${state.error}'));
-            }
-            return const Center(child: Text('Thankyou Page'));
-          },
-        ),
-      ),
+    return Scaffold(
+      appBar: buildAppBar(),
+      body: Transform.translate(
+          offset: const Offset(0, -16),
+          child: ThankYouViewBody(
+            total: total,
+          )),
     );
   }
 }
