@@ -392,10 +392,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- 📧 Email: support@example.com
-- 💬 Discord: [Join our community](https://discord.gg/example)
-- 📚 Documentation: [Read the docs](https://docs.example.com)
-- 🐛 Issues: [Report bugs](https://github.com/example/issues)
+- 📧 Email: ahmed.shabaan.dev@gmail.com
+- 💬 Discord: [Join our community]()
 
 ## 🔄 Changelog
 
