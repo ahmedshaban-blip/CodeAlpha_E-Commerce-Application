@@ -349,15 +349,21 @@ pie title App Performance Metrics
 
 ## 📱 Screenshots
 
-<div align="center">
-<table>
-<tr>
-<td><img src="https://via.placeholder.com/200x400/4285F4/FFFFFF?text=Login+Screen" alt="Login Screen"></td>
-<td><img src="https://via.placeholder.com/200x400/34A853/FFFFFF?text=Home+Page" alt="Home Page"></td>
-<td><img src="https://via.placeholder.com/200x400/FBBC04/FFFFFF?text=Cart+Page" alt="Cart Page"></td>
-<td><img src="https://via.placeholder.com/200x400/EA4335/FFFFFF?text=Payment" alt="Payment"></td>
-</tr>
-</table>
+
+<div align="center">  
+  <table>  
+    <tr>  
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/522shots_so.png" alt="Login Screen" width="200"></td>  
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/59shots_so.png" alt="Home Page" width="200"></td>  
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/404shots_so.png" alt="Cart Page" width="200"></td>  
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/923shots_so.png" alt="Payment" width="200"></td>  
+    </tr>  
+    <tr>
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/271shots_so.png" alt="Screen 5" width="200"></td>
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/874shots_so.png" alt="Screen 6" width="200"></td>
+      <td><img src="https://raw.githubusercontent.com/ahmedshaban-blip/CodeAlpha_E-Commerce-Application/refs/heads/main/assets/Screenshots/223shots_so.png" alt="Screen 7" width="200"></td>
+    </tr>
+  </table>  
 </div>
 
 ## 🤝 Contributing
