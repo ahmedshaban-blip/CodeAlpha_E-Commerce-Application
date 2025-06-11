@@ -38,6 +38,7 @@ dependencies:
 <<<<<<< HEAD
   shared_preferences: ^2.5.3
 =======
+  path: ^1.9.0
   shared_preferences: null
 >>>>>>> 816b8fcab51b755780f4f45cb3f0bd515c13c5a7
 
@@ -60,3 +61,4 @@ flutter:
     - assets/lottie/
     - assets/lang/
     - .env
+
