@@ -4,6 +4,8 @@ import 'package:e_commerce/core/routing/routes.dart';
 import 'package:e_commerce/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:e_commerce/features/cart/presentation/pages/cart_page.dart';
 import 'package:e_commerce/features/productdetails/presentation/pages/productdetails_page.dart';
+import 'package:e_commerce/features/profile/presentation/pages/profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/home_cubit.dart';
@@ -24,6 +26,18 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          actions: [
+            // Profile Icon
+            IconButton(
+              icon: const Icon(Icons.person),
+              tooltip: 'Profile',
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.ProfileScreen);
+              },
+            ),
+
+            // Logout Icon
+          ],
           title: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               final index = context.watch<HomeCubit>().currentIndex;

@@ -1,6 +1,8 @@
 import 'package:e_commerce/features/home/presentation/pages/home_page.dart';
 import 'package:e_commerce/features/login/presentation/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 class AuthWrapper extends StatelessWidget {
@@ -8,25 +10,21 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Solution 1: Using authStateChanges() - requires firebase_auth ^4.0.0 or higher
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: FirebaseAuth.instance.userChanges(),
       builder: (context, snapshot) {
-        // إذا كان في عملية تحميل
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        // إذا كان المستخدم مسجل دخول
         if (snapshot.hasData && snapshot.data != null) {
-          return HomePage(); // استبدلها بصفحتك الرئيسية
+          return const HomePage();
         }
 
-        // إذا كان المستخدم غير مسجل دخول
-        return const loginScreen(); // استبدلها بصفحة تسجيل الدخول
+        return const LoginScreen(); // Fixed class name capitalization
       },
     );
   }

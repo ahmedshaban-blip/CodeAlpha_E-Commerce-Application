@@ -15,6 +15,12 @@ class ThemeCubit extends Cubit<ThemeState> {
     return ThemeMode.system;
   }
 
+  void toggleTheme() {
+    final isDark = state.themeMode == ThemeMode.dark;
+    final newTheme = isDark ? ThemeMode.light : ThemeMode.dark;
+    changeTheme(newTheme);
+  }
+
   Future<void> changeTheme(ThemeMode newTheme) async {
     await AppPreferences().setData(AppConstants.themeKey, newTheme.name);
     emit(ThemeState(newTheme));

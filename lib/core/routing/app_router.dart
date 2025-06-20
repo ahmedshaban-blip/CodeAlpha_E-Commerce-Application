@@ -1,7 +1,10 @@
+import 'package:e_commerce/features/accountsettings/presentation/pages/accountsettings_page.dart';
 import 'package:e_commerce/features/home/presentation/pages/home_page.dart';
 import 'package:e_commerce/features/login/presentation/pages/auth_wraper.dart';
 import 'package:e_commerce/features/login/presentation/pages/login_page.dart';
 import 'package:e_commerce/features/productdetails/presentation/pages/productdetails_page.dart';
+import 'package:e_commerce/features/profile/presentation/pages/profile_page.dart';
+import 'package:e_commerce/features/register/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import '../routing/routes.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
@@ -17,10 +20,16 @@ class AppRouter {
         return _createRoute(const OnboardingScreen());
       case Routes.AuthWrapper:
         return _createRoute(AuthWrapper());
-      case Routes.loginScreen:
-        return _createRoute(const loginScreen());
+      case Routes.LoginScreen:
+        return _createRoute(const LoginScreen());
+      case Routes.RegisterScreen:
+        return _createRoute(RegisterScreen());
       case Routes.HomePage:
         return _createRoute(HomePage());
+      case Routes.AccountSettingsScreen:
+        return _createRoute(AccountSettingsScreen());
+      case Routes.ProfileScreen:
+        return _createRoute(ProfileScreen());
       case Routes.ProductdetailsPage:
         final product = settings.arguments as ProductModel;
         return _createRoute(ProductdetailsPage(products: product));
