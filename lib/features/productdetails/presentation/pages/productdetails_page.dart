@@ -125,7 +125,7 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
                       MaterialPageRoute(
                         builder: (context) {
                           return CheckoutPage(
-                            products: [widget.products], // ✅ الحل هنا
+                            products: [widget.products], 
                           );
                         },
                       ),
@@ -154,3 +154,4 @@ class _ProductdetailsPageState extends State<ProductdetailsPage> {
     );
   }
 }
+
