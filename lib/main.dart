@@ -32,7 +32,7 @@ void main() async {
       path: 'assets/lang',
       fallbackLocale: const Locale('en'),
       child: ScreenUtilInit(
-        designSize: const Size(360, 690), // ← حسب تصميمك من Figma أو XD
+        designSize: const Size(360, 690), 
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
@@ -42,10 +42,10 @@ void main() async {
               BlocProvider(create: (_) => ThemeCubit()),
               BlocProvider(
                   create: (_) =>
-                      CartCubit()..loadCart()), // ✅ حمّل البيانات مباشرة
+                      CartCubit()..loadCart()), 
 
               BlocProvider(
-                  create: (_) => HomeCubit()), // لو عندك HomeCubit مثلاً
+                  create: (_) => HomeCubit()), 
             ],
             child: MyApp(appRouter: AppRouter()),
           );
