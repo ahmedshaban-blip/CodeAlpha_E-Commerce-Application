@@ -18,7 +18,7 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   String? _selectedPaymentMethod;
 
-  // ✅ حساب السعر الإجمالي الصحيح (السعر × الكمية)
+  
   double get totalPrice {
     return widget.products
         .fold(0.0, (sum, item) => sum + (item.price! * item.quantity));
@@ -57,7 +57,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           fontSize: 18.sp, fontWeight: FontWeight.bold)),
                   SizedBox(height: 8.h),
 
-                  /// قائمة المنتجات مع الكمية الصحيحة
+                  
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -65,7 +65,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     itemBuilder: (context, index) {
                       final product = widget.products[index];
                       final itemTotal =
-                          product.price! * product.quantity; // ✅ السعر × الكمية
+                          product.price! * product.quantity; 
 
                       return Card(
                         margin: EdgeInsets.only(bottom: 8.h),
@@ -77,7 +77,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // صورة المنتج
+                              
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.r),
                                 child: Image.network(
@@ -98,7 +98,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               ),
                               SizedBox(width: 12.w),
 
-                              // تفاصيل المنتج
+                              
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +114,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     ),
                                     SizedBox(height: 4.h),
 
-                                    // ✅ عرض الكمية الحقيقية
+                                    
                                     Text(
                                       "Quantity: ${product.quantity}",
                                       style: TextStyle(
@@ -124,7 +124,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     ),
                                     SizedBox(height: 4.h),
 
-                                    // عرض السعر للوحدة
+                                    
                                     Text(
                                       "Unit Price: \$${product.price!.toStringAsFixed(2)}",
                                       style: TextStyle(
@@ -136,7 +136,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 ),
                               ),
 
-                              // ✅ السعر الإجمالي للمنتج (سعر × كمية)
+                              
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -167,7 +167,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                   Divider(height: 32.h, thickness: 2),
 
-                  /// ✅ السعر الإجمالي الصحيح
+                  
                   Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -198,7 +198,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                   SizedBox(height: 24.h),
 
-                  /// طريقة الدفع
+                  
                   Text("Payment Method",
                       style: TextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold)),
@@ -230,7 +230,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                   SizedBox(height: 24.h),
 
-                  // ملخص الطلب
+                  
                   Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -331,3 +331,4 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 }
+
