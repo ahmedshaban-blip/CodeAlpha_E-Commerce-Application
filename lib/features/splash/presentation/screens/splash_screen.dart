@@ -1,42 +1,4 @@
-// import 'dart:async';
 
-// import 'package:flutter/material.dart';
-
-// import '../../../../core/extensions/navigation_extensions.dart';
-// import '../../../../core/routing/routes.dart';
-
-// class SplashScreen extends StatefulWidget {
-//   const SplashScreen({super.key});
-
-//   @override
-//   State<SplashScreen> createState() => _SplashScreenState();
-// }
-
-// class _SplashScreenState extends State<SplashScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             FlutterLogo(size: 100),
-//             SizedBox(height: 20),
-//             Text("Splash Screen", style: TextStyle(fontSize: 20)),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     Timer(const Duration(seconds: 2), () {
-//       context.pushNamed(Routes.onBoardingScreen);
-//     });
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,20 +17,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateToNextScreen() async {
-    // انتظار لمدة 3 ثواني (أو أقل حسب احتياجك)
+    
     await Future.delayed(const Duration(seconds: 3));
 
-    // التحقق من SharedPreferences
+  
     final prefs = await SharedPreferences.getInstance();
     final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
 
     if (!mounted) return;
 
     if (hasSeenOnboarding) {
-      // إذا شاف الـ OnBoarding قبل كده، روح على AuthWrapper
+    
       Navigator.pushReplacementNamed(context, '/AuthWrapper');
     } else {
-      // إذا مشافوش، روح على OnBoarding
+      
       Navigator.pushReplacementNamed(context, '/onBoardingScreen');
     }
   }
@@ -76,12 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue, // أو أي لون تحبه
+      backgroundColor: Colors.blue, 
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // شعار التطبيق
+            
             Container(
               width: 150,
               height: 150,
@@ -104,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 30),
 
-            // اسم التطبيق
+            
             const Text(
               'E-Commerce',
               style: TextStyle(
@@ -116,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 10),
 
             const Text(
-              'تطبيق التجارة الإلكترونية',
+              'تطبيق التجارة الإلكترونية'،
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white70,
