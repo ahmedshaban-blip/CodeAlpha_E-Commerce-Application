@@ -44,7 +44,7 @@ class CartPage extends StatelessWidget {
               );
             }
 
-            // حساب السعر الإجمالي - هيتحدث تلقائيا مع تغيير الكمية
+          
             final total = cart.fold<double>(
               0.0,
               (sum, item) => sum + (item.price * item.quantity),
@@ -186,7 +186,7 @@ class CartPage extends StatelessWidget {
                                               size: 18),
                                           onPressed: product.quantity > 1
                                               ? () {
-                                                  // تقليل الكمية والسعر هيتحدث تلقائياً
+                                                  
                                                   context
                                                       .read<CartCubit>()
                                                       .updateQuantity(
@@ -214,7 +214,7 @@ class CartPage extends StatelessWidget {
                                         IconButton(
                                           icon: const Icon(Icons.add, size: 18),
                                           onPressed: () {
-                                            // زيادة الكمية والسعر هيتحدث تلقائياً
+                                            
                                             context
                                                 .read<CartCubit>()
                                                 .updateQuantity(
@@ -240,7 +240,7 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
 
-                // Bottom Summary Section
+                
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
