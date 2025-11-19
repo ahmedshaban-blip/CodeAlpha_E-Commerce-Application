@@ -17,8 +17,6 @@ class CartCubit extends Cubit<CartState> {
       print("🛒 Loaded products from SharedPreferences: $products");
       emit(CartLoaded(items: products));
     } catch (e, stackTrace) {
-      print("❌ Error loading cart: $e");
-      print(stackTrace); // هيساعدك تشوف مكان الخطأ بالضبط
       emit(CartError("فشل تحميل الكارت"));
     }
   }
@@ -29,12 +27,12 @@ class CartCubit extends Cubit<CartState> {
   }
 
   void updateQuantity(int productId, int newQuantity) {
-    // غيرنا String لـ int
+    
     if (state is CartLoaded) {
       final currentState = state as CartLoaded;
       final updatedCart = currentState.items.map((item) {
         if (item.id == productId) {
-          // دلوقتي المقارنة هتشتغل صح
+          
           return item.copyWith(quantity: newQuantity);
         }
         return item;
